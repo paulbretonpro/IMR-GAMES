@@ -49,4 +49,18 @@ class GamesManager extends CommonManager
             return false;
         }
     }
+
+    /**
+     * @param GamesFilters $updateGame
+     * @param int $id
+     * @return bool
+     */
+    public function update(GamesFilters $updateGame, int $id) :bool
+    {
+        $game = Games::find($id);
+        if($game) {
+            return $this->repository->update($updateGame, $game);
+        }
+        return false;
+    }
 }

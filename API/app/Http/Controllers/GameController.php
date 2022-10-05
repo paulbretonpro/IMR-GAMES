@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Filters\GamesFilters;
 use App\Http\Requests\GamesStoreRequest;
-use App\Http\Resources\GamesResource;
+use App\Http\Requests\GamesUpdateRequest;
 use App\Managers\GamesManager;
-use App\Models\Games;
-use Illuminate\Http\Client\Request;
 use Illuminate\Http\JsonResponse;
 
 class GameController extends Controller
@@ -49,6 +47,20 @@ class GameController extends Controller
     public function destroy(int $id) :JsonResponse
     {
         if($this->manager->delete($id)) {
+            return $this->responseEmpty();
+        }
+        return $this->responseError();
+    }
+
+    /**
+     * @param int $id
+     * @param GamesUpdateRequest $request
+     * @return JsonResponse
+     */
+    public function update(int $id, GamesUpdateRequest $request) :JsonResponse
+    {
+        $updateGame = GamesFilters::fromRequest($request);
+        if ($this->manager->update($updateGame, $id)) {
             return $this->responseEmpty();
         }
         return $this->responseError();
