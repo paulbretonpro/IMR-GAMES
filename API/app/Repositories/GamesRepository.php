@@ -15,13 +15,5 @@ class GamesRepository extends CommonRepository
         parent::__construct($model);
     }
 
-    /**
-     * @return Collection
-     */
-    public function all()
-    {
-        return parent::all();
-    }
-
 
 }

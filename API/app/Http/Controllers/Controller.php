@@ -28,6 +28,18 @@ class Controller extends BaseController
     /**
      * @return JsonResponse
      */
+    public function responseError() :JsonResponse
+    {
+        return new JsonResponse([
+            'success' => false,
+            'payload' => []
+        ], 500);
+    }
+
+
+    /**
+     * @return JsonResponse
+     */
     public function responseEmpty() :JsonResponse
     {
         return new JsonResponse([
