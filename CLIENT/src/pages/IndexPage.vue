@@ -5,11 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import { api } from 'src/boot/axios';
-
+import { getGames } from 'src/services/games';
 
 const login = async () => {
-  await api.get('/game');
+  const games = await getGames()
 }
 
 </script>
