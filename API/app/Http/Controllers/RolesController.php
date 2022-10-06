@@ -31,4 +31,18 @@ class RolesController extends Controller
 
         return $this->responseError();
     }
+
+    /**
+     * @param int $idGame
+     * @param int $idRole
+     * @return JsonResponse
+     */
+    public function destroy(int $idGame, int $idRole) :JsonResponse
+    {
+        if($this->manager->delete($idRole)) {
+            return $this->responseEmpty();
+        }
+
+        return $this->responseError();
+    }
 }
