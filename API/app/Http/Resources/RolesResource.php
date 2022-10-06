@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JetBrains\PhpStorm\ArrayShape;
 
-class GamesResource extends JsonResource
+class RolesResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -13,14 +13,13 @@ class GamesResource extends JsonResource
      * @param  Request  $request
      * @return array
      */
-    #[ArrayShape(['id' => "int", 'name' => "string", 'rule' => "string", 'roles' => "App\\Http\\Resources\\RolesResource"])]
+    #[ArrayShape(['id' => "int", 'name' => "string", 'description' => "string"])]
     public function toArray($request) :array
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'rule' => $this->rule,
-            'roles' => RolesResource::collection($this->roles)
+            'description' => $this->description,
         ];
     }
 }
