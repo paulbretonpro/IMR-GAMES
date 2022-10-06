@@ -5,6 +5,7 @@ namespace App\Repositories;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 abstract class CommonRepository
 {
@@ -24,14 +25,18 @@ abstract class CommonRepository
 
     /**
      * @param Model $data
-     * @return bool|string
+     * @return bool|void
      */
-    public function create(Model $data) {
-        if (get_class($data) == get_class($this->model)) {
-            return $data->save();
+    public function create(Model $data)
+    {
+        try {
+            if (get_class($data) == get_class($this->model)) {
+                return $data->save();
+            }
+        } catch (Exception $e) {
+            Log::error($e);
+            return false;
         }
-
-        return Exception::class;
     }
 
     /**
