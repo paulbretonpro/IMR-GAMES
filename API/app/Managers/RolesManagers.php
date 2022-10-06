@@ -28,4 +28,18 @@ class RolesManagers extends CommonManager
             'games_id' => $id,
         ]));
     }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function delete(int $id) :bool
+    {
+        $role = Roles::find($id);
+        if($role) {
+            return $this->repository->delete($role);
+        } else {
+            return false;
+        }
+    }
 }
