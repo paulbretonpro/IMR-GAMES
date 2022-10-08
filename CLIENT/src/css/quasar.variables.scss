@@ -23,3 +23,35 @@ $positive  : #21BA45;
 $negative  : #C10015;
 $info      : #31CCEC;
 $warning   : #F2C037;
+
+body {
+  --text-primary: #FFFFFF;
+  --text-secondary: #F9E1C7;
+
+  --btn-primary: #F27402;
+  --btn-disabled: #F9E1C7;
+
+  --background-primary: #5E3449;
+  --background-secondary: #915070;
+
+  --text-size-xl: 32px;
+  --text-size-lg: 16px;
+  
+  
+  --text-line-height-xl: 29px;
+  --text-line-height-lg: 19px;
+  
+  --text-font-weight-xl: 700;
+  --text-font-weight-lg: 500;
+
+
+
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+}
+
+// Loader
+circle {
+  //TODO: change background color of loader
+  color: var(--btn-primary);
+}
