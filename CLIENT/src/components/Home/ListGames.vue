@@ -1,8 +1,8 @@
 <template>
-  <div class="no-game">
-    <div v-if="listGames.length === 0">{{ t('home-listgames-no-game') }}</div>
+  <div class="no-game" v-if="listGames.length === 0">
+    <div >{{ t('home-listgames-no-game') }}</div>
   </div>
-  <div class="list-games">
+  <div class="list-games" v-else>
     <div class="game" v-for="game in listGames" :key="game.id">
       {{ game.name }}
     </div>
@@ -25,7 +25,7 @@
 
   onMounted(async () => {
     loader.value = true
-    //await gameStore.fetch()
+    await gameStore.fetch()
     loader.value = false
   })
 
