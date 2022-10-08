@@ -23,6 +23,7 @@ const { t } = useI18n()
 .index {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 .title {
   font-weight: var(--text-font-weight-xl);
