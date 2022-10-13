@@ -3,7 +3,7 @@
     <div >{{ t('home-listgames-no-game') }}</div>
   </div>
   <div class="list-games" v-else>
-    <div class="game" v-for="game in listGames" :key="game.id">
+    <div class="game" v-for="game in listGames" :key="game.id" @click="goGame(game.code)">
       {{ game.name }}
     </div>
   </div>
@@ -15,6 +15,7 @@
   import { useGamesStore } from 'src/stores/games';
   import { ref, computed, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n';
+  import { useRouter } from 'vue-router';
 
   const { t } = useI18n()
 
@@ -22,6 +23,13 @@
 
   const listGames = computed(() => gameStore.games)
   const loader = ref(false)
+
+  const router = useRouter()
+
+  const goGame = async (code) => {
+    await gameStore.show(code)
+    router.push({ path: `/game/${code}`, params: { code: code }})
+  }
 
   onMounted(async () => {
     loader.value = true

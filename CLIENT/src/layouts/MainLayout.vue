@@ -5,23 +5,27 @@
         flat
         dense
         icon="arrow_back"
+        @click="goHome"
       >
         Accueil
       </q-btn>
     </div>
     
-    <q-page-container>
-      <router-view />
-    </q-page-container>
+    <router-view />
   </q-layout>
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
+
+const goHome = () => router.push({ path: '/' })
 </script>
 <style lang="scss" scoped>
 .back {
   margin-bottom: 2rem;
+  position: absolute;
 }
 .q-btn {
   text-transform: none;
@@ -32,6 +36,7 @@
 }
 .layout {
   padding: 1.5rem;
+  height: 100vh;
 }
 
 </style>
