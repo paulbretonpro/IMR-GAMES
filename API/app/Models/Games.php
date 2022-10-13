@@ -12,7 +12,8 @@ class Games extends Model
 
     protected $fillable = [
         'name',
-        'rule'
+        'rule',
+        'code'
     ];
 
     protected $primaryKey = 'id';

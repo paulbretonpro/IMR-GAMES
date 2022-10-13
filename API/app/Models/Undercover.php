@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Roles extends Model
+class Undercover extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
-        'name',
-        'description',
-        'games_id',
-        'icon'
+        'creator_id'
     ];
+
+
 }

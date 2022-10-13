@@ -3,10 +3,8 @@ namespace App\Managers;
 
 use App\Filters\GamesFilters;
 use App\Http\Resources\GamesResource;
-use App\Managers\CommonManager;
 use App\Models\Games;
 use App\Repositories\GamesRepository;
-use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GamesManager extends CommonManager
@@ -62,5 +60,14 @@ class GamesManager extends CommonManager
             return $this->repository->update($updateGame, $game);
         }
         return false;
+    }
+
+    /**
+     * @param string $code
+     * @return GamesResource
+     */
+    public function getGame(string $code): GamesResource
+    {
+        return GamesResource::make($this->repository->getGame($code)->first());
     }
 }
