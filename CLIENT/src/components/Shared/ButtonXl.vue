@@ -19,6 +19,7 @@ const handleClick = () => emit('handle-click')
 
 <style lang="scss" scoped>
 .button {
+  width: 100%;
   .q-btn {
     background-color: var(--btn-primary);
     width: 100%;

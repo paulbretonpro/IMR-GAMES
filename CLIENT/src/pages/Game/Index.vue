@@ -1,5 +1,7 @@
 <template>
-  <Game></Game>
+  <div class="game">
+    <Game></Game>
+  </div>
 </template>
 <script>
 import Game from 'src/components/Game/Index.vue';
@@ -8,3 +10,8 @@ import Game from 'src/components/Game/Index.vue';
     components: { Game }
 }
 </script>
+<style lang="scss" scoped>
+  .game {
+    @include container;
+  }
+</style>

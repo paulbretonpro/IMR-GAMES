@@ -1,9 +1,7 @@
 <template>
-  <div class="game">
-    <CarrousselRule v-if="!next"></CarrousselRule>
-    <NbPlayer v-if="next"></NbPlayer>
-    <ButtonXl :label="labelBtn" @handle-click="handleNext"></ButtonXl>
-  </div>
+  <CarrousselRule v-if="!next"></CarrousselRule>
+  <NbPlayer v-if="next" v-model:nbPlayers="nbPlayers"></NbPlayer>
+  <ButtonXl :label="labelBtn" @handle-click="handleNext"></ButtonXl>
   <q-inner-loading
     :showing="loader"
   />
@@ -15,25 +13,48 @@ export default {
 </script>
 <script setup>
 import { useGamesStore } from 'src/stores/games';
+import { useUndercoverStore } from 'src/stores/undercover';
 import { onMounted, ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 import ButtonXl from '../Shared/ButtonXl.vue';
 import CarrousselRule from './CarrousselRule.vue';
 import NbPlayer from './NbPlayer.vue';
 
+const router = useRouter()
+
 const gameStore = useGamesStore()
+const undercoverStore = useUndercoverStore()
+
 const { t } = useI18n()
 
 const loader = ref(false)
 const next = ref(false)
 
+const game = computed(() => gameStore.game)
+
 onMounted(async () => {
   loader.value = true
-  await gameStore.show('undercover')
+  if(!game.value) await gameStore.show('undercover')
   loader.value = false
 })
 
-const handleNext = () => next.value = true
+const handleNext = async () => {
+  if(next.value) {
+    gameStore.fetchNbPlayer(nbPlayers.value)
+
+    switch (game.value.code) {
+      case 'undercover': {
+        await undercoverStore.store()
+        router.push({ name: 'new-players' })
+      }
+        break;
+    }
+  }
+  next.value = true
+}
+
+const nbPlayers = ref(1)
 
 const labelBtn = computed(() => next.value ? t('play') : t('continue'))
 </script>
@@ -48,9 +69,6 @@ const labelBtn = computed(() => next.value ? t('play') : t('continue'))
     margin: auto;
   } 
   
-  .button {
-    margin-bottom: 2rem;
-  }
 }
 </style>
 <style lang="scss">

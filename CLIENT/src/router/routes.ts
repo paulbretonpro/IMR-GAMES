@@ -15,7 +15,17 @@ const routes: RouteRecordRaw[] = [
     path: '/undercover',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Undercover/Index.vue') },
+      {
+        path: '',
+        name: 'indexUndercover',
+        component: () => import('pages/Undercover/Index.vue'),
+      },
+
+      {
+        name: 'new-players',
+        path: 'players',
+        component: () => import('pages/Undercover/players.vue'),
+      },
     ],
   },
   // Always leave this as last one,

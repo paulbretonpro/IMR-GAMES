@@ -2,24 +2,36 @@
   <div class="nb-players">
     <div class="title">{{ t('game-nb-player-enter-nb') }}</div>
     <div class="select-nb">
-      <q-select filled v-model="model" :options="options" />
+      <q-select filled v-model="nbPlayersComputed" :options="options" />
     </div>
   </div>
 </template>
-<script setup>
-import { onMounted, ref } from 'vue';
+<script setup lang="ts">
+import { onMounted, ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-const model = ref(1)
-const options = ref([])
 
 const { t } = useI18n() 
+
+const options = ref([])
+
+const props = defineProps<{
+  nbPlayers: number;
+}>()
+
+const emit = defineEmits<{
+  (name: 'update:nbPlayers', value: number): void;
+}>();
+
+const nbPlayersComputed = computed({
+  get: () => props.nbPlayers,
+  set: (nb) => emit('update:nbPlayers', nb)
+})
+
 onMounted(() => {
   for(let i=1; i<=30; i++) {
     options.value.push(i)
   }
 })
-
-
 </script>
 <style lang="scss" scoped>
 .title {
