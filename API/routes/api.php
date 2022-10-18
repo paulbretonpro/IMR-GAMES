@@ -3,6 +3,8 @@
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UndercoverController;
+use App\Http\Controllers\UndercoverMembersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('/games', GameController::class);
 
 Route::resource('/games/{game}/roles', RolesController::class);
+
+Route::resource('/undercover', UndercoverController::class);
+
+Route::resource('/undercover/{undercover}/members', UndercoverMembersController::class);

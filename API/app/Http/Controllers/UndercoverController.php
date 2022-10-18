@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Http\Requests\UndercoverStoreRequest;
+use App\Http\Resources\UndercoverResource;
 use App\Managers\UndercoverManager;
+use App\Models\Undercover;
 use Illuminate\Http\JsonResponse;
 
 class UndercoverController extends Controller
@@ -16,18 +16,33 @@ class UndercoverController extends Controller
         $this->manager = $manager;
     }
 
-    /**
-     * @return JsonResponse
-     */
-    public function index(): JsonResponse
-    {
+    public function show(int $id) {
+        $undercover = Undercover::find($id);
+        return $this->responseSuccess(UndercoverResource::make($undercover));
     }
 
     /**
-     * @param UndercoverStoreRequest $request
-     * @return void
+     * @return JsonResponse
      */
-    public function store(UndercoverStoreRequest $request)
+    public function store(): JsonResponse
     {
+        $uniqId = $this->manager->create();
+        if($uniqId) {
+            return $this->responseSuccess($uniqId);
+        }
+
+        return $this->responseError();
+    }
+
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function destroy(int $id): JsonResponse
+    {
+        if($this->manager->delete($id)) {
+            return $this->responseEmpty();
+        }
+        return $this->responseError();
     }
 }

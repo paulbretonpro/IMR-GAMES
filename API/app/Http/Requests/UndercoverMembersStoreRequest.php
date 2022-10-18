@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UndercoverStoreRequest extends CommonRequest
+class UndercoverMembersStoreRequest extends CommonRequest
 {
     public function authorize(): bool
     {
@@ -14,7 +14,9 @@ class UndercoverStoreRequest extends CommonRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|string'
+            'name' => 'required|string',
+            'role_id' => 'required|int',
+            'word' => 'sometimes|string|nullable'
         ];
     }
 }
