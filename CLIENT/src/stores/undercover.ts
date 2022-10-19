@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { LocalStorage } from 'quasar';
+import { UndercoverENUM } from 'src/LocalStorageEnum/Undercover';
 import { Members, Undercover } from 'src/models/undercover';
 import {
   addPlayerUndercover,
@@ -15,19 +16,19 @@ export const useUndercoverStore = defineStore('undercover', {
     id: 0 as number,
   }),
   getters: {
-    getId: (state) => state.id || LocalStorage.getItem('UNDERCOVER_id'),
+    getId: (state) => state.id || LocalStorage.getItem(UndercoverENUM.ID),
     getUndercover: (state) =>
-      state.undercover || LocalStorage.getItem('UNDERCOVER_game'),
+      state.undercover || LocalStorage.getItem(UndercoverENUM.GAME),
   },
   actions: {
     async show() {
       this.undercover = await show(this.getId);
-      LocalStorage.set('UNDERCOVER_game', this.undercover);
+      LocalStorage.set(UndercoverENUM.GAME, this.undercover);
     },
     async store() {
       this.id = await store();
       // SET id undercover pour le reload
-      LocalStorage.set('UNDERCOVER_id', this.id);
+      LocalStorage.set(UndercoverENUM.ID, this.id);
     },
     addPlayer(player: Members) {
       addPlayerUndercover(this.getId, player);
@@ -44,7 +45,6 @@ export const useUndercoverStore = defineStore('undercover', {
     },
 
     async deleteGame() {
-      console.log(this.getId);
       await deleteUndercover(this.getId);
     },
   },

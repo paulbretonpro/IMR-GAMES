@@ -3,6 +3,7 @@ import { getGames, showGame } from 'src/services/games';
 import { Game } from 'src/models/game';
 import { LocalStorage } from 'quasar';
 import { useUndercoverStore } from './undercover';
+import { GameENUM } from 'src/LocalStorageEnum/Game';
 
 const undercoverStore = useUndercoverStore();
 
@@ -15,13 +16,15 @@ export const useGamesStore = defineStore('games', {
   }),
   getters: {
     getNbPlayers: (state) =>
-      state.nbPlayers || (LocalStorage.getItem('GAME_nbPlayers') as number),
+      state.nbPlayers || (LocalStorage.getItem(GameENUM.NBPLAYERS) as number),
     getNbNewPlayers: (state) => {
-      state.nbNewPlayers = LocalStorage.getItem('GAME_nbNewPlayers') as number;
+      state.nbNewPlayers = LocalStorage.getItem(
+        GameENUM.NBNEWPLAYERS
+      ) as number;
       return state.nbNewPlayers;
     },
     getGame: (state) =>
-      state.game ? state.game : (LocalStorage.getItem('GAME_game') as Game),
+      state.game ? state.game : (LocalStorage.getItem(GameENUM.GAME) as Game),
   },
   actions: {
     async fetch() {
@@ -29,16 +32,16 @@ export const useGamesStore = defineStore('games', {
     },
     async show(code: string) {
       this.game = await showGame(code);
-      LocalStorage.set('GAME_game', this.game);
+      LocalStorage.set(GameENUM.GAME, this.game);
     },
     fetchNbPlayer(nb: number) {
       this.nbPlayers = nb;
       //SET nb_player si reload
-      LocalStorage.set('GAME_nbPlayers', this.nbPlayers);
+      LocalStorage.set(GameENUM.NBPLAYERS, this.nbPlayers);
     },
     addNbNewPlayer() {
       this.nbNewPlayers = this.getNbNewPlayers ? this.getNbNewPlayers + 1 : 2;
-      LocalStorage.set('GAME_nbNewPlayers', this.nbNewPlayers);
+      LocalStorage.set(GameENUM.NBNEWPLAYERS, this.nbNewPlayers);
     },
     /**
      * RESET SECTION
@@ -55,14 +58,14 @@ export const useGamesStore = defineStore('games', {
     },
     resetNbNewPlayers() {
       this.nbNewPlayers = 1;
-      LocalStorage.set('GAME_nbNewPlayers', this.nbNewPlayers);
+      LocalStorage.set(GameENUM.NBNEWPLAYERS, this.nbNewPlayers);
     },
     resetNbPlayers() {
       this.nbPlayers = 0;
-      LocalStorage.set('GAME_nbPlayers', 0);
+      LocalStorage.set(GameENUM.NBPLAYERS, 0);
     },
     resetTabPlayers() {
-      LocalStorage.set('UNDERCOVER_tabPlayers', []);
+      LocalStorage.set(GameENUM.TABPLAYERS, []);
     },
   },
 });

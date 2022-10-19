@@ -10,16 +10,19 @@
 </template>
 <script setup lang="ts">
 import { LocalStorage } from 'quasar';
-import { UndercoverENUM } from 'src/LocalStorage/Undercover';
+import { UndercoverENUM } from 'src/LocalStorageEnum/Undercover';
 import { Members } from 'src/models/undercover';
 import { useGamesStore } from 'src/stores/games';
 import { useUndercoverStore } from 'src/stores/undercover';
 import { ref, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import ButtonXl from '../Shared/ButtonXl.vue';
 import { useRandom } from './functions/random';
 
 const tabPlayersRoleWord = ref<Members[]>([])
+
+const { t } = useI18n()
 
 onMounted(() => {
   const tabLocalStorage = LocalStorage.has(UndercoverENUM.GAME)
@@ -48,9 +51,9 @@ const newPlayer = ref<Members>({
 })
 const displayWord = ref(false)
 
-const title = computed(() => displayWord.value ? 'Votre mot est :' : 'Entrez votre nom de joueur')
-const word = computed(() => newPlayer.value.word === '' ? 'Pas de mot' : newPlayer.value.word)
-const labelBtn = computed(() => displayWord.value ? 'Continuez !' : `Ajouter joueur ${nbNewPlayers.value} / ${nbPlayers.value}`)
+const title = computed(() => displayWord.value ? t('undercover.enter.name.word.is') : t('game.enter.name'))
+const word = computed(() => newPlayer.value.word === '' ? t('undercover.show.word') : newPlayer.value.word)
+const labelBtn = computed(() => displayWord.value ? t('continue') : t('undercover.label.button.add.members', { nbNewPlayers: nbNewPlayers.value, nbPlayers: nbPlayers.value}))
 
 const { indexMrWhite, getRoleId } = useRandom(tabPlayersRoleWord.value)
 
@@ -86,7 +89,9 @@ const addPlayer = () => {
   if(indexMrWhite === nbNewPlayers.value) {
     player.role = 1;
   } else {
-    player.role = getRoleId()
+    const roleId = getRoleId()
+    console.log(roleId)
+    player.role = roleId
     player.word = player.role === 2 ? undercover.value.words.good : undercover.value.words.fake;
   }
   
@@ -102,6 +107,9 @@ const addPlayerLocalstorage = (player: Members) => {
 
 </script>
 <style lang="scss" scoped>
+.new-player {
+  width: 100%;
+}
 .title {
   @include title;
   text-align: center;
@@ -127,6 +135,9 @@ const addPlayerLocalstorage = (player: Members) => {
   .q-field__native {
     color: white;
     text-align: center;
+  }
+  .q-field__control {
+    color: var(--btn-primary);
   }
 }
 </style>
