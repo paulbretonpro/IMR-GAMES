@@ -30,8 +30,8 @@ export const useUndercoverStore = defineStore('undercover', {
       // SET id undercover pour le reload
       LocalStorage.set(UndercoverENUM.ID, this.id);
     },
-    addPlayer(player: Members) {
-      addPlayerUndercover(this.getId, player);
+    async addPlayer(player: Members) {
+      return await addPlayerUndercover(this.getId, player);
     },
     async deletePlayer(playerId: number) {
       await deletePlayerUndercover(this.undercover.id, playerId);

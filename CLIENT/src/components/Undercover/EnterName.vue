@@ -10,7 +10,7 @@
 </template>
 <script setup lang="ts">
 import { LocalStorage } from 'quasar';
-import { UndercoverENUM } from 'src/LocalStorageEnum/Undercover';
+import { GameENUM, UndercoverENUM } from 'src/LocalStorageEnum';
 import { Members } from 'src/models/undercover';
 import { useGamesStore } from 'src/stores/games';
 import { useUndercoverStore } from 'src/stores/undercover';
@@ -28,10 +28,9 @@ onMounted(() => {
   const tabLocalStorage = LocalStorage.has(UndercoverENUM.GAME)
   if(!tabLocalStorage) {
     // initialisation tabPlayers
-    LocalStorage.set(UndercoverENUM.TABPLAYERS, [])
+    LocalStorage.set(GameENUM.TABPLAYERS, [])
   } else {
-    console.log(LocalStorage.getItem(UndercoverENUM.TABPLAYERS) as Members[])
-    tabPlayersRoleWord.value = LocalStorage.getItem(UndercoverENUM.TABPLAYERS) as Members[]
+    tabPlayersRoleWord.value = LocalStorage.getItem(GameENUM.TABPLAYERS) as Members[]
   }
 })
 
@@ -57,29 +56,33 @@ const labelBtn = computed(() => displayWord.value ? t('continue') : t('undercove
 
 const { indexMrWhite, getRoleId } = useRandom(tabPlayersRoleWord.value)
 
-const handleClick = () => {
+const handleClick = async () => {
   if(displayWord.value) {
     displayWord.value = false
   } else {
-    newPlayer.value = addPlayer()
-    undercoverStore.addPlayer(newPlayer.value)
+    newPlayer.value = createPlayer()
     
-    addPlayerLocalstorage(newPlayer.value)
-    
-    name.value = ''
+    const playerIsAdd = await undercoverStore.addPlayer(newPlayer.value)
 
-    gameStore.addNbNewPlayer()
-    
-    if(nbNewPlayers.value > nbPlayers.value){
-      route.push({
-        name: 'indexUndercover'
-      })   
-    }
-    displayWord.value = true
+    if(playerIsAdd) {
+      addPlayerLocalstorage(newPlayer.value)
+      
+      name.value = ''
+      
+      gameStore.addNbNewPlayer()      
+      
+      if(nbNewPlayers.value > nbPlayers.value){
+        route.push({
+          name: 'indexUndercover'
+        })   
+      }
+      displayWord.value = true
+    }    
+
   }
 }
 
-const addPlayer = () => {
+const createPlayer = () => {
   const player = {
     name: name.value,
     role: 0,
@@ -90,7 +93,6 @@ const addPlayer = () => {
     player.role = 1;
   } else {
     const roleId = getRoleId()
-    console.log(roleId)
     player.role = roleId
     player.word = player.role === 2 ? undercover.value.words.good : undercover.value.words.fake;
   }
@@ -99,9 +101,9 @@ const addPlayer = () => {
 }
 
 const addPlayerLocalstorage = (player: Members) => {
-  const tabAlreadyStore = LocalStorage.getItem(UndercoverENUM.TABPLAYERS) as Members[]
+  const tabAlreadyStore = LocalStorage.getItem(GameENUM.TABPLAYERS) as Members[]
   tabAlreadyStore.push(player)
-  LocalStorage.set(UndercoverENUM.TABPLAYERS, tabAlreadyStore)
+  LocalStorage.set(GameENUM.TABPLAYERS, tabAlreadyStore)
   tabPlayersRoleWord.value.push(player)
 }
 

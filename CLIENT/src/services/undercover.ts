@@ -19,15 +19,19 @@ export async function store() {
   }
 }
 
-export function addPlayerUndercover(undercoverId: number, player: Members) {
+export async function addPlayerUndercover(
+  undercoverId: number,
+  player: Members
+) {
   try {
-    const newPlayer = api.post(`/undercover/${undercoverId}/members`, {
+    const newPlayer = await api.post(`/undercover/${undercoverId}/members`, {
       name: player.name,
       role_id: player.role,
       word: player.word,
     });
+    return newPlayer.data.payload;
   } catch (error) {
-    throw new Error();
+    return false;
   }
 }
 

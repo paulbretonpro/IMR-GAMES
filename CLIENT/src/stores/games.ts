@@ -47,11 +47,14 @@ export const useGamesStore = defineStore('games', {
      * RESET SECTION
      */
     async resetLocalStorage() {
-      switch (this.getGame.code) {
-        case 'undercover':
-          undercoverStore.deleteGame();
-          break;
+      if (undercoverStore.getId) {
+        switch (this.getGame.code) {
+          case 'undercover':
+            undercoverStore.deleteGame();
+            break;
+        }
       }
+
       this.resetNbNewPlayers();
       this.resetNbPlayers();
       this.resetTabPlayers();

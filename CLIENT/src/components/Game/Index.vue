@@ -41,8 +41,8 @@ onMounted(async () => {
 
 const handleNext = async () => {
   if(next.value) {
-    gameStore.fetchNbPlayer(nbPlayers.value)
 
+    gameStore.fetchNbPlayer(nbPlayers.value)
     switch (game.value.code) {
       case 'undercover': {
         await undercoverStore.store()

@@ -1,11 +1,12 @@
 import { LocalStorage } from 'quasar';
+import { GameENUM, UndercoverENUM } from 'src/LocalStorageEnum';
 import { Members } from 'src/models/undercover';
 
 export function useRandom(tabPlayers: Members[]) {
-  const maxIndex = LocalStorage.getItem('GAME_nbPlayers') as number;
+  const maxIndex = LocalStorage.getItem(GameENUM.NBPLAYERS) as number;
 
   const getIdMrWhite = () => {
-    const indexMrWhite = LocalStorage.getItem('UNDERCOVER_idMrWhite');
+    const indexMrWhite = LocalStorage.getItem(UndercoverENUM.MRWHITEID);
     if (!indexMrWhite) {
       return Math.floor(Math.random() * maxIndex) + 1;
     } else {
@@ -19,13 +20,7 @@ export function useRandom(tabPlayers: Members[]) {
    * @return number (rand [2, 3])
    */
   const getRoleId = () => {
-    if (tabPlayers.map((p) => p.role).includes(3)) {
-      return 2;
-    } else if (tabPlayers.map((p) => p.role).includes(2)) {
-      return 3;
-    } else {
-      return Math.floor(Math.random() * 2) + 2;
-    }
+    return 2;
   };
 
   return {

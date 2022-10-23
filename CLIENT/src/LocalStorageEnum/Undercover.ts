@@ -1,6 +1,5 @@
 export enum UndercoverENUM {
   GAME = 'UNDERCOVER_game',
-  TABPLAYERS = 'UNDERCOVER_tabPlayers',
-  ID = 'UNDERCOVER_ID',
+  ID = 'UNDERCOVER_id',
   MRWHITEID = 'UNDERCOVER_idMrWhite',
 }
