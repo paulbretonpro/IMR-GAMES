@@ -6,7 +6,7 @@
     </div>
     <div class="display-word" v-if="displayWord">{{ word }}</div>
   </div>
-  <button-xl :label="labelBtn" @click="handleClick"></button-xl>
+  <button-xl :disabled="disableBtn" :label="labelBtn" @handle-click="handleClick"></button-xl>
 </template>
 <script setup lang="ts">
 import { LocalStorage } from 'quasar';
@@ -43,6 +43,7 @@ const undercover = computed(() => undercoverStore.getUndercover)
 const nbPlayers = computed(() => gameStore.getNbPlayers)
 const nbNewPlayers = computed(() => gameStore.getNbNewPlayers || 1)
 const name = ref('')
+const disableBtn = computed(() => name.value === '' && !displayWord.value)
 const newPlayer = ref<Members>({
   name: '',
   role: 0,
@@ -71,14 +72,15 @@ const handleClick = async () => {
       
       gameStore.addNbNewPlayer()      
       
-      if(nbNewPlayers.value > nbPlayers.value){
-        route.push({
-          name: 'indexUndercover'
-        })   
-      }
+      
       displayWord.value = true
     }    
 
+  }
+  if(nbNewPlayers.value > nbPlayers.value){
+    route.push({
+      name: 'indexUndercover'
+    })   
   }
 }
 

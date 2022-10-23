@@ -1,19 +1,26 @@
 <template>
   <div class="button">
-    <q-btn @click="handleClick">{{ label }}</q-btn>    
+    <q-btn :disable="disabled" @click="handleClick">{{ label }}</q-btn>    
   </div>
 </template>
 <script setup lang="ts">
 
-const props = defineProps({
-  label: String,
-})
+const props = withDefaults(
+  defineProps<{
+    label: string,
+    disabled?: boolean
+  }>(), {
+    disabled: false
+  }
+);
+
+
 
 const emit = defineEmits<{
   (name: 'handle-click'): void,
 }>()
 
-const handleClick = () => emit('handle-click')
+const handleClick = () => props.disabled ? null : emit('handle-click')
 
 </script>
 

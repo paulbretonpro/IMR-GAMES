@@ -1,3 +1,4 @@
+import { errorAlreadyExist } from 'src/assets/utils/Notify';
 import { api } from 'src/boot/axios';
 import { Members } from 'src/models/undercover';
 
@@ -31,6 +32,7 @@ export async function addPlayerUndercover(
     });
     return newPlayer.data.payload;
   } catch (error) {
+    errorAlreadyExist(`Le joueur ${player.name}`);
     return false;
   }
 }
