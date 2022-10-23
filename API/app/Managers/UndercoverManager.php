@@ -8,6 +8,7 @@ use App\Models\Undercover;
 use App\Models\UndercoverMembers;
 use App\Models\UndercoverWords;
 use App\Repositories\UndercoverRepository;
+use Exception;
 use Illuminate\Support\Facades\Log;
 
 class UndercoverManager extends CommonManager
@@ -31,7 +32,7 @@ class UndercoverManager extends CommonManager
 
             $this->repository->create($undercover);
             return $undercover->id;
-        } catch (\Exception $exception){
+        } catch (Exception $exception){
             Log::error($e->getMessage());
             return 0;
         }
@@ -39,15 +40,16 @@ class UndercoverManager extends CommonManager
 
     /**
      * @param UndercoverMembersFilters $filters
+     * @param int $undercoverId
      * @return Members|bool
      */
-    public function newMember(UndercoverMembersFilters $filters): Members|bool
+    public function newMember(UndercoverMembersFilters $filters, int $undercoverId): Members | bool
     {
         try {
-            $member = new Members(['roles_id' => $filters->role_id, 'name' => $filters->name]);
+            $member = new Members(['roles_id' => $filters->role_id, 'name' => $undercoverId.'_'. $filters->name]);
             $member->save();
             return $member;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             return false;
         }
@@ -70,7 +72,7 @@ class UndercoverManager extends CommonManager
             $memberUndercover->save();
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             return false;
         }
@@ -85,7 +87,7 @@ class UndercoverManager extends CommonManager
         try {
             Undercover::find($undercoverMemberId)->delete();
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             return false;
         }

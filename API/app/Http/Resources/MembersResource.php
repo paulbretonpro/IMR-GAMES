@@ -18,7 +18,7 @@ class MembersResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->getName,
             'roles_id' => RolesResource::make(Roles::find($this->roles_id)),
         ];
     }

@@ -6,7 +6,9 @@ use App\Filters\UndercoverMembersFilters;
 use App\Http\Requests\UndercoverMembersStoreRequest;
 use App\Managers\UndercoverManager;
 use App\Models\Undercover;
+use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class UndercoverMembersController extends Controller
 {
@@ -26,7 +28,13 @@ class UndercoverMembersController extends Controller
     {
         $newPlayer = UndercoverMembersFilters::fromRequest($request);
 
-        $member = $this->manager->newMember($newPlayer);
+        try {
+            $member = $this->manager->newMember($newPlayer, $undercover->id);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            $this->responseError();
+        }
+
 
         if($member && $this->manager->newUndercoverMember($newPlayer, $member->id, $undercover->id)) {
             return $this->responseEmpty();

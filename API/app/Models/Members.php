@@ -26,4 +26,13 @@ class Members extends Model
     {
         return $this->hasOne(Roles::class, 'id', 'roles_id');
     }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        $name = explode('_', $this->name);
+        return $name[1];
+    }
 }

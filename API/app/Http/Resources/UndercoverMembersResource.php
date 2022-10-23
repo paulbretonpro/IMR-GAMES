@@ -19,7 +19,7 @@ class UndercoverMembersResource extends JsonResource
         $member = $this->member;
         return [
             'id' => $this->id,
-            'name' => $member->name,
+            'name' => $member->getName(),
             'role' => $member->role->name,
             'word' => $this->word,
         ];
