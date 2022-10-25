@@ -33,7 +33,6 @@ export function useRandom(tabPlayers: Members[]) {
    */
   const getRoleId = () => {
     const roleId = Math.floor(Math.random() * 2) + 2;
-    console.log(roleId);
     let choice;
 
     if (roleId === 3 && nbCIVIL > 0) {
@@ -52,7 +51,6 @@ export function useRandom(tabPlayers: Members[]) {
 
     setLocalstorage(nbCIVIL, nbUNDERCOVER);
 
-    console.log('nb civil : ' + nbCIVIL + ' nb undercover : ' + nbUNDERCOVER);
     return choice;
   };
 
