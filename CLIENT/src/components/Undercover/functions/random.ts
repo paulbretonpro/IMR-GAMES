@@ -10,8 +10,8 @@ export function useRandom(tabPlayers: Members[]) {
 
   const initNbRole = () => {
     if (!nbCIVIL && !nbUNDERCOVER) {
-      nbUNDERCOVER = Math.ceil((maxIndex - 1) / 2);
-      nbCIVIL = maxIndex - nbUNDERCOVER;
+      nbCIVIL = Math.ceil(maxIndex * 0.55);
+      nbUNDERCOVER = maxIndex - nbCIVIL - 1;
     }
   };
 
