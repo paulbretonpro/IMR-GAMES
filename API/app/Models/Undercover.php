@@ -15,6 +15,7 @@ class Undercover extends Model
     protected $table = 'undercover';
 
     protected $fillable = [
+        'id',
         'creator',
         'games_id',
         'undercover_words_id'

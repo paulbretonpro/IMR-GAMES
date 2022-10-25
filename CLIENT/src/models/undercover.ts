@@ -10,6 +10,7 @@ export interface Undercover {
 }
 
 export interface Members {
+  id: number;
   name: string;
   role: number;
   word: string;

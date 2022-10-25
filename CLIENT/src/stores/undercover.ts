@@ -18,7 +18,9 @@ export const useUndercoverStore = defineStore('undercover', {
   getters: {
     getId: (state) => state.id || LocalStorage.getItem(UndercoverENUM.ID),
     getUndercover: (state) =>
-      state.undercover || LocalStorage.getItem(UndercoverENUM.GAME),
+      Object.keys(state.undercover).length === 0
+        ? LocalStorage.getItem(UndercoverENUM.GAME)
+        : state.undercover,
   },
   actions: {
     async show() {
@@ -46,6 +48,9 @@ export const useUndercoverStore = defineStore('undercover', {
 
     async deleteGame() {
       await deleteUndercover(this.getId);
+    },
+    resetUndercoverGame() {
+      LocalStorage.set(UndercoverENUM.GAME, {});
     },
   },
 });

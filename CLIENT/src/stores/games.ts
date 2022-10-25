@@ -58,6 +58,7 @@ export const useGamesStore = defineStore('games', {
       this.resetNbNewPlayers();
       this.resetNbPlayers();
       this.resetTabPlayers();
+      undercoverStore.resetUndercoverGame();
     },
     resetNbNewPlayers() {
       this.nbNewPlayers = 1;

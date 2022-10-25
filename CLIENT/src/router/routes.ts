@@ -26,6 +26,11 @@ const routes: RouteRecordRaw[] = [
         path: 'players',
         component: () => import('pages/Undercover/players.vue'),
       },
+      {
+        name: 'reveal',
+        path: 'reveal/:id',
+        component: () => import('pages/Undercover/DiscoverMember.vue'),
+      },
     ],
   },
   // Always leave this as last one,

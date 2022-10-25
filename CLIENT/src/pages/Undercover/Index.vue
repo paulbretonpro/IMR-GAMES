@@ -14,3 +14,4 @@ import { onMounted } from 'vue';
   const undercoverStore = useUndercoverStore()
   onMounted(async () => await undercoverStore.show())
 </script>
+

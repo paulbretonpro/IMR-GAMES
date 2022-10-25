@@ -53,9 +53,9 @@ class UndercoverMembersController extends Controller
      * @param int $undercoverMemberId
      * @return JsonResponse
      */
-    public function destroy(int $undercoverId, int $undercoverMemberId): JsonResponse
+    public function destroy($undercoverId, int $undercoverMemberId): JsonResponse
     {
-        if ($this->manager->delete($undercoverMemberId)) {
+        if ($this->manager->deleteMember($undercoverMemberId)) {
             return $this->responseEmpty();
         }
         return $this->responseError();

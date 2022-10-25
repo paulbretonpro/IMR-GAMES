@@ -6,20 +6,19 @@
 <script setup lang="ts">
 import { LocalStorage } from 'quasar';
 import EnterName from 'src/components/Undercover/EnterName.vue';
+import { UndercoverENUM } from 'src/LocalStorageEnum';
 import { Undercover } from 'src/models/undercover';
 import { useUndercoverStore } from 'src/stores/undercover';
-import { onMounted, computed } from 'vue'
+import { onMounted } from 'vue'
 
 const undercoverStore = useUndercoverStore()
-const undercover = computed(() => undercoverStore.undercover)
 
 onMounted(async () => {
-  if(LocalStorage.getItem('UNDERCOVER_game')) {
-    const undercover = LocalStorage.getItem('UNDERCOVER_game') as Undercover
+  if(LocalStorage.getItem(UndercoverENUM.GAME) === null) {
+    const undercover = LocalStorage.getItem(UndercoverENUM.GAME) as Undercover
     undercoverStore.setUndercoverFromLocalStorage(undercover)
   } else {
     await undercoverStore.show()
-    LocalStorage.set('UNDERCOVER_game', undercover.value)
   }
 })
 </script>

@@ -79,13 +79,30 @@ class UndercoverManager extends CommonManager
     }
 
     /**
+     * @param int $undercoverId
+     * @return bool
+     */
+    public function delete(int $undercoverId): bool
+    {
+        try {
+            Undercover::find($undercoverId)->delete();
+            return true;
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
+    }
+
+    /**
      * @param int $undercoverMemberId
      * @return bool
      */
-    public function delete(int $undercoverMemberId): bool
+    public function deleteMember(int $undercoverMemberId): bool
     {
         try {
-            Undercover::find($undercoverMemberId)->delete();
+            // TODO: pour la feature du groupe penser à supprimer uniquement le undercoverMembers
+            $memberId = UndercoverMembers::find($undercoverMemberId)->members_id;
+            Members::find($memberId)->delete();
             return true;
         } catch (Exception $e) {
             Log::error($e->getMessage());
