@@ -51,6 +51,14 @@ export const useUndercoverStore = defineStore('undercover', {
     },
     resetUndercoverGame() {
       LocalStorage.set(UndercoverENUM.GAME, {});
+      this.resetNbCivil();
+      this.resetNbUndercover();
+    },
+    resetNbCivil() {
+      LocalStorage.set(UndercoverENUM.NBCIVIL, 0);
+    },
+    resetNbUndercover() {
+      LocalStorage.set(UndercoverENUM.NBUNDERCOVER, 0);
     },
   },
 });

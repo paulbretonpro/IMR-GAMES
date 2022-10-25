@@ -55,7 +55,7 @@ const title = computed(() => displayWord.value ? t('undercover.enter.name.word.i
 const word = computed(() => newPlayer.value.word === '' ? t('undercover.show.word') : newPlayer.value.word)
 const labelBtn = computed(() => displayWord.value ? t('continue') : t('undercover.label.button.add.members', { nbNewPlayers: nbNewPlayers.value, nbPlayers: nbPlayers.value}))
 
-const { indexMrWhite, getRoleId } = useRandom(tabPlayersRoleWord.value)
+const { indexMrWhite, getRoleId, resetLocalstorage } = useRandom(tabPlayersRoleWord.value)
 
 const handleClick = async () => {
   if(displayWord.value) {
@@ -72,12 +72,12 @@ const handleClick = async () => {
       
       gameStore.addNbNewPlayer()      
       
-      
       displayWord.value = true
     }    
 
   }
   if(nbNewPlayers.value > nbPlayers.value){
+    resetLocalstorage()
     route.push({
       name: 'indexUndercover'
     })   
@@ -95,8 +95,9 @@ const createPlayer = () => {
     player.role = 1;
   } else {
     const roleId = getRoleId()
+    console.log(roleId)
     player.role = roleId
-    player.word = player.role === 2 ? undercover.value.words.good : undercover.value.words.fake;
+    player.word = player.role === 3 ? undercover.value.words.good : undercover.value.words.fake;
   }
   
   return player
