@@ -8,12 +8,12 @@
   </div> 
 </template>
 <script lang="ts">
-import { useI18n } from 'vue-i18n';
-import ListPlayers from './ListPlayers.vue';
-export default {
+  import { useI18n } from 'vue-i18n';
+  import ListPlayers from './ListPlayers.vue';
+  export default {
     name: 'IndexUndercover',
     components: { ListPlayers },
-}
+  }
 </script>
 <script lang="ts" setup>
 const { t } = useI18n()

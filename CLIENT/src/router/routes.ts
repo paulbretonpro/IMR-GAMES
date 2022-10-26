@@ -31,6 +31,16 @@ const routes: RouteRecordRaw[] = [
         path: 'reveal/:id',
         component: () => import('pages/Undercover/DiscoverMember.vue'),
       },
+      {
+        name: 'find-word',
+        path: 'find-word/:id',
+        component: () => import('pages/Undercover/FindWord.vue'),
+      },
+      {
+        name: 'end',
+        path: 'end',
+        component: () => import('pages/Undercover/EndGame.vue'),
+      },
     ],
   },
   // Always leave this as last one,

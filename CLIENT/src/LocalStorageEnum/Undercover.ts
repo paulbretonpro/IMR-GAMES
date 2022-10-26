@@ -4,4 +4,7 @@ export enum UndercoverENUM {
   MRWHITEID = 'UNDERCOVER_idMrWhite',
   NBCIVIL = 'UNDERCOVER_nbCivil',
   NBUNDERCOVER = 'UNDERCOVER_nbUndercover',
+  END = 'UNDERCOVER_end',
+  CIVIL = 3,
+  UNDERCOVER = 2,
 }

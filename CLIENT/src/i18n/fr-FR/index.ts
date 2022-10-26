@@ -15,4 +15,10 @@ export default {
   'undercover.show.word': 'Pas de mot',
   'undercover.label.button.add.members':
     'Ajouter joueur {nbNewPlayers} / {nbPlayers}',
+  'undercover.reveal.title': 'Ce joueur était',
+  'undercover.reveal.btn.find.word': 'Devinez le mot',
+  'undercover.reveal.title.find.word': 'Le mot a été deviné ?',
+  'undercover.role.winner': 'Mr white | Undercover | Civil',
+  'btn.yes': 'oui !',
+  'btn.no': 'non . . .',
 };

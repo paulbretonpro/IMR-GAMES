@@ -4,14 +4,24 @@ import { Members } from 'src/models/undercover';
 
 export function useRandom(tabPlayers: Members[]) {
   const maxIndex = LocalStorage.getItem(GameENUM.NBPLAYERS) as number;
+
+  const setNbCivil = (nb: number) =>
+    LocalStorage.set(UndercoverENUM.NBCIVIL, nb);
+
+  const setIdMrWhite = (id: number) =>
+    LocalStorage.set(UndercoverENUM.MRWHITEID, id);
+
+  const setNbUndercover = (nb: number) =>
+    LocalStorage.set(UndercoverENUM.NBUNDERCOVER, nb);
+
   let nbCIVIL = (LocalStorage.getItem(UndercoverENUM.NBCIVIL) as number) || 0;
   let nbUNDERCOVER =
     (LocalStorage.getItem(UndercoverENUM.NBUNDERCOVER) as number) || 0;
 
   const initNbRole = () => {
     if (!nbCIVIL && !nbUNDERCOVER) {
-      nbCIVIL = Math.ceil(maxIndex * 0.55);
-      nbUNDERCOVER = maxIndex - nbCIVIL - 1;
+      nbUNDERCOVER = Math.floor((maxIndex - 1) * 0.55);
+      nbCIVIL = maxIndex - nbUNDERCOVER - 1;
     }
   };
 
@@ -20,7 +30,9 @@ export function useRandom(tabPlayers: Members[]) {
   const getIdMrWhite = () => {
     const indexMrWhite = LocalStorage.getItem(UndercoverENUM.MRWHITEID);
     if (!indexMrWhite) {
-      return Math.floor(Math.random() * maxIndex) + 1;
+      const id = Math.floor(Math.random() * maxIndex) + 1;
+      setIdMrWhite(id);
+      return;
     } else {
       return indexMrWhite;
     }
@@ -55,8 +67,8 @@ export function useRandom(tabPlayers: Members[]) {
   };
 
   const setLocalstorage = (nbCIVIL: number, nbUNDERCOVER: number) => {
-    LocalStorage.set(UndercoverENUM.NBCIVIL, nbCIVIL);
-    LocalStorage.set(UndercoverENUM.NBUNDERCOVER, nbUNDERCOVER);
+    setNbCivil(nbCIVIL);
+    setNbUndercover(nbUNDERCOVER);
   };
 
   const resetLocalstorage = () => {
@@ -68,5 +80,9 @@ export function useRandom(tabPlayers: Members[]) {
     indexMrWhite,
     getRoleId,
     resetLocalstorage,
+    setNbCivil,
+    setNbUndercover,
+    nbCIVIL,
+    nbUNDERCOVER,
   };
 }

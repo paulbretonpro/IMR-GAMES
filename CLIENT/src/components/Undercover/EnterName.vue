@@ -45,6 +45,7 @@ const nbNewPlayers = computed(() => gameStore.getNbNewPlayers || 1)
 const name = ref('')
 const disableBtn = computed(() => name.value === '' && !displayWord.value)
 const newPlayer = ref<Members>({
+  id: 0,
   name: '',
   role: 0,
   word: '',
@@ -55,7 +56,7 @@ const title = computed(() => displayWord.value ? t('undercover.enter.name.word.i
 const word = computed(() => newPlayer.value.word === '' ? t('undercover.show.word') : newPlayer.value.word)
 const labelBtn = computed(() => displayWord.value ? t('continue') : t('undercover.label.button.add.members', { nbNewPlayers: nbNewPlayers.value, nbPlayers: nbPlayers.value}))
 
-const { indexMrWhite, getRoleId, resetLocalstorage } = useRandom(tabPlayersRoleWord.value)
+const { indexMrWhite, getRoleId, resetLocalstorage, setNbCivil, setNbUndercover, nbCIVIL, nbUNDERCOVER } = useRandom(tabPlayersRoleWord.value)
 
 const handleClick = async () => {
   if(displayWord.value) {
@@ -67,16 +68,18 @@ const handleClick = async () => {
 
     if(playerIsAdd) {
       addPlayerLocalstorage(newPlayer.value)
-      
       name.value = ''
-      
       gameStore.addNbNewPlayer()      
-      
       displayWord.value = true
-    }    
-
+    } else {
+      if(newPlayer.value.role === 3) {
+        setNbCivil(nbCIVIL)
+      } else if(newPlayer.value.role === 2) {
+        setNbUndercover(nbUNDERCOVER)
+      }
+    }
   }
-  if(nbNewPlayers.value > nbPlayers.value){
+  if(!displayWord.value && nbNewPlayers.value > nbPlayers.value){
     resetLocalstorage()
     route.push({
       name: 'indexUndercover'

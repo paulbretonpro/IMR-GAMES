@@ -14,9 +14,12 @@ export const useUndercoverStore = defineStore('undercover', {
   state: () => ({
     undercover: {} as Undercover,
     id: 0 as number,
+    winner: 0,
   }),
   getters: {
     getId: (state) => state.id || LocalStorage.getItem(UndercoverENUM.ID),
+    getWinner: (state) =>
+      state.winner || (LocalStorage.getItem(UndercoverENUM.END) as number),
     getUndercover: (state) =>
       Object.keys(state.undercover).length === 0
         ? LocalStorage.getItem(UndercoverENUM.GAME)
@@ -45,6 +48,10 @@ export const useUndercoverStore = defineStore('undercover', {
     setIdUndercoverFromLocalStorage(id: number) {
       this.id = id;
     },
+    setWinner(id: number) {
+      this.winner = id;
+      LocalStorage.set(UndercoverENUM.END, id);
+    },
 
     async deleteGame() {
       await deleteUndercover(this.getId);
@@ -53,12 +60,17 @@ export const useUndercoverStore = defineStore('undercover', {
       LocalStorage.set(UndercoverENUM.GAME, {});
       this.resetNbCivil();
       this.resetNbUndercover();
+      this.resetWinner();
     },
     resetNbCivil() {
       LocalStorage.set(UndercoverENUM.NBCIVIL, 0);
     },
     resetNbUndercover() {
       LocalStorage.set(UndercoverENUM.NBUNDERCOVER, 0);
+    },
+    resetWinner() {
+      this.winner = 0;
+      LocalStorage.set(UndercoverENUM.END, 0);
     },
   },
 });
