@@ -16,7 +16,7 @@
         {{ gameComputed?.rule ? gameComputed.rule : t('no-rule') }}
       </div>
     </q-carousel-slide>
-    <q-carousel-slide v-for="role in gameRoles" :key="role.id" :name="role.id" class="column no-wrap flex-center">
+    <q-carousel-slide v-for="role in gameRoles" :key="role.name" :name="role.name" class="column no-wrap flex-center">
       <img :src="imgSrc(role.icon)" />
       <div class="title-caroussel">{{ role.name }}</div>
       <div class="q-mt-md text-center">

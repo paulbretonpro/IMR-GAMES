@@ -56,7 +56,7 @@ const title = computed(() => displayWord.value ? t('undercover.enter.name.word.i
 const word = computed(() => newPlayer.value.word === '' ? t('undercover.show.word') : newPlayer.value.word)
 const labelBtn = computed(() => displayWord.value ? t('continue') : t('undercover.label.button.add.members', { nbNewPlayers: nbNewPlayers.value, nbPlayers: nbPlayers.value}))
 
-const { indexMrWhite, getRoleId, resetLocalstorage, setNbCivil, setNbUndercover, nbCIVIL, nbUNDERCOVER } = useRandom(tabPlayersRoleWord.value)
+const { indexMrWhite, getRoleId, resetLocalstorage, setNbCivil, setNbUndercover, nbCIVIL, nbUNDERCOVER } = useRandom()
 
 const handleClick = async () => {
   if(displayWord.value) {
@@ -89,6 +89,7 @@ const handleClick = async () => {
 
 const createPlayer = () => {
   const player = {
+    id:0,
     name: name.value,
     role: 0,
     word: '',
@@ -98,7 +99,6 @@ const createPlayer = () => {
     player.role = 1;
   } else {
     const roleId = getRoleId()
-    console.log(roleId)
     player.role = roleId
     player.word = player.role === 3 ? undercover.value.words.good : undercover.value.words.fake;
   }

@@ -18,6 +18,7 @@ export const useUndercoverStore = defineStore('undercover', {
   }),
   getters: {
     getId: (state) => state.id || LocalStorage.getItem(UndercoverENUM.ID),
+    getCurrentState: () => LocalStorage.getItem(UndercoverENUM.CURRENTSTATE) as number || 0,
     getWinner: (state) =>
       state.winner || (LocalStorage.getItem(UndercoverENUM.END) as number),
     getUndercover: (state) =>
@@ -39,6 +40,8 @@ export const useUndercoverStore = defineStore('undercover', {
       return await addPlayerUndercover(this.getId, player);
     },
     async deletePlayer(playerId: number) {
+      let currentState = this.getCurrentState
+      this.setCurrentState(currentState++)
       await deletePlayerUndercover(this.undercover.id, playerId);
     },
 
@@ -52,6 +55,9 @@ export const useUndercoverStore = defineStore('undercover', {
       this.winner = id;
       LocalStorage.set(UndercoverENUM.END, id);
     },
+    setCurrentState(nb: number) {
+      LocalStorage.set(UndercoverENUM.CURRENTSTATE, nb)
+    },
 
     async deleteGame() {
       await deleteUndercover(this.getId);
@@ -61,6 +67,8 @@ export const useUndercoverStore = defineStore('undercover', {
       this.resetNbCivil();
       this.resetNbUndercover();
       this.resetWinner();
+      this.resetIndexMrWhite();
+      this.resetCurrentState();
     },
     resetNbCivil() {
       LocalStorage.set(UndercoverENUM.NBCIVIL, 0);
@@ -68,9 +76,15 @@ export const useUndercoverStore = defineStore('undercover', {
     resetNbUndercover() {
       LocalStorage.set(UndercoverENUM.NBUNDERCOVER, 0);
     },
+    resetIndexMrWhite() {
+      LocalStorage.set(UndercoverENUM.MRWHITEID, 0)
+    },
     resetWinner() {
       this.winner = 0;
       LocalStorage.set(UndercoverENUM.END, 0);
     },
+    resetCurrentState() {
+      LocalStorage.set(UndercoverENUM.CURRENTSTATE, 0)
+    }
   },
 });

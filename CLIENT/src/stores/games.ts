@@ -55,9 +55,7 @@ export const useGamesStore = defineStore('games', {
         }
       }
 
-      this.resetNbNewPlayers();
-      this.resetNbPlayers();
-      this.resetTabPlayers();
+      this.resetGame() 
       undercoverStore.resetUndercoverGame();
     },
     resetNbNewPlayers() {
@@ -70,6 +68,11 @@ export const useGamesStore = defineStore('games', {
     },
     resetTabPlayers() {
       LocalStorage.set(GameENUM.TABPLAYERS, []);
+    },
+    resetGame() {
+      this.resetNbNewPlayers()
+      this.resetNbPlayers()
+      this.resetTabPlayers()
     },
   },
 });

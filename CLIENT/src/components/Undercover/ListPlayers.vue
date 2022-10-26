@@ -5,7 +5,7 @@
 </template>
 <script setup lang="ts">
 import { LocalStorage } from 'quasar';
-import { UndercoverENUM } from 'src/LocalStorageEnum';
+import { GameENUM, UndercoverENUM } from 'src/LocalStorageEnum';
 import { Members } from 'src/models/undercover';
 import { useUndercoverStore } from 'src/stores/undercover';
 import { computed, watch } from 'vue'
@@ -20,14 +20,41 @@ const handleDbClick = (member: Members) => {
   router.push({ name: 'reveal', params: { id: member.id }})
 }
 
-const indexWhoStart = computed(() => Math.floor(Math.random() * members.value?.length))  
+const indexMrWhite = LocalStorage.getItem(UndercoverENUM.MRWHITEID) as number
+
+const chooseIndexStart = (): number => {
+  let index = Math.floor(Math.random() * (LocalStorage.getItem(GameENUM.NBPLAYERS) as number))
+  if(index === (indexMrWhite - 1) && undercoverStore.getCurrentState === 0) {
+    return chooseIndexStart()
+  } else {
+    return index
+  }
+}
+
+const indexWhoStart = chooseIndexStart()
 
 const findByRole = (array: Members[], role: string) => array.filter((member: Members) => member.role === role)
 
 const nbCivilLast = computed(() => members.value ? findByRole(members.value, 'CIVIL') : [])
 const nbUndercoverLast = computed(() => members.value ? findByRole(members.value, 'UNDERCOVER') : [])
 
-const mrWhiteIsDead = computed(() => LocalStorage.getItem(UndercoverENUM.MRWHITEID) as number > 0 ? false : true )
+const mrWhiteIsDead = computed(() => indexMrWhite > 0 ? false : true )
+
+watch(
+  mrWhiteIsDead,
+  () => {
+    // il reste que des civils
+    if(nbUndercoverLast.value?.length === 0) {
+      undercoverStore.setWinner(UndercoverENUM.CIVIL)
+    } else if(nbCivilLast.value?.length === 0) {
+    // il reste que des undercovers
+      undercoverStore.setWinner(UndercoverENUM.UNDERCOVER)
+    }
+    // Par défaut
+    undercoverStore.setWinner(UndercoverENUM.CIVIL)
+    router.push({ name: 'end' })
+  }
+)
 
 watch(
   nbCivilLast,

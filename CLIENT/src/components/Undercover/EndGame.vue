@@ -3,7 +3,7 @@
     <div class="title">
       Le groupe gagnant est
     </div>  
-    <div class="winner">{{ t('undercover.role.winner', roleId) }}</div>
+    <div class="winner">{{ t('undercover.role.winner', roleId - 1) }}</div>
   </div>
 </template>
 <script setup lang="ts">

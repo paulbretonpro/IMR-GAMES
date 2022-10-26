@@ -7,4 +7,5 @@ export enum UndercoverENUM {
   END = 'UNDERCOVER_end',
   CIVIL = 3,
   UNDERCOVER = 2,
+  CURRENTSTATE = 'UNDERCOVER_currentState'
 }

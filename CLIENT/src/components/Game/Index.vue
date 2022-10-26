@@ -40,11 +40,12 @@ onMounted(async () => {
 })
 
 const handleNext = async () => {
+  gameStore.resetGame()
   if(next.value) {
-
     gameStore.fetchNbPlayer(nbPlayers.value)
     switch (game.value.code) {
       case 'undercover': {
+        undercoverStore.resetUndercoverGame()
         await undercoverStore.store()
         router.push({ name: 'new-players' })
       }
