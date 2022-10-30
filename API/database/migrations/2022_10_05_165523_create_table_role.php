@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->string('icon');
             $table->foreignIdFor(Games::class)->references('id')->on('games')->onDelete('cascade');
             $table->timestamps();
         });

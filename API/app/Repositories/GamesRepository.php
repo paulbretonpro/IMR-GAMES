@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Filters\GamesFilters;
 use App\Models\Games;
+use Illuminate\Database\Eloquent\Builder;
+
 class GamesRepository extends CommonRepository
 {
 
@@ -27,6 +29,15 @@ class GamesRepository extends CommonRepository
         }
 
         return $games->save();
+    }
+
+    /**
+     * @param string $code
+     * @return Builder
+     */
+    public function getGame(string $code): Builder
+    {
+        return Games::query()->where('code', '=', $code);
     }
 
 

@@ -27,6 +27,20 @@ class GameController extends Controller
     }
 
     /**
+     * @param string $code
+     * @return JsonResponse
+     */
+    public function show(string $code): JsonResponse
+    {
+        $game = $this->manager->getGame($code);
+
+        if ($game) {
+            return $this->responseSuccess($game);
+        }
+        return $this->responseError();
+    }
+
+    /**
      * @param GamesStoreRequest $request
      * @return JsonResponse
      */

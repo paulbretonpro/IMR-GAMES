@@ -12,6 +12,7 @@ class Roles extends Model
     protected $fillable = [
         'name',
         'description',
-        'games_id'
+        'games_id',
+        'icon'
     ];
 }

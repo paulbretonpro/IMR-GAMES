@@ -10,3 +10,12 @@ export async function getGames(): Promise<Game[]> {
     return [];
   }
 }
+
+export async function showGame(code: string) {
+  try {
+    const game = await api.get(`games/${code}`);
+    return game.data.payload;
+  } catch (error) {
+    console.error(error);
+  }
+}

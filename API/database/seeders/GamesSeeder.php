@@ -18,6 +18,7 @@ class GamesSeeder extends Seeder
         DB::table('games')->insert([
             'name' => 'Undercover',
             'rule' => 'coucou voici les règles du jeu préféré des IMR, UNDERCOVER',
+            'code' => 'undercover',
         ]);
     }
 }

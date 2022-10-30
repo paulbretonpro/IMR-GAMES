@@ -9,4 +9,6 @@ class GamesFilters extends DataTransferObject
     public $name;
     /** @var string */
     public $rule;
+    /** @var string */
+    public $code;
 }

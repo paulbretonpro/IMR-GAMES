@@ -13,13 +13,14 @@ class RolesResource extends JsonResource
      * @param  Request  $request
      * @return array
      */
-    #[ArrayShape(['id' => "int", 'name' => "string", 'description' => "string"])]
+    #[ArrayShape(['id' => "int", 'name' => "string", 'description' => "string", 'icon' => "string"])]
     public function toArray($request) :array
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'icon' => $this->icon,
         ];
     }
 }

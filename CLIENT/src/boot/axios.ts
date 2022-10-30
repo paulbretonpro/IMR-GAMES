@@ -29,15 +29,4 @@ export default boot(({ app }) => {
   //       so you can easily perform requests against your app's API
 });
 
-/*axios.interceptors.response.use(
-  (response) => response.data,
-  (error) => {
-    if (error.response && 419 === error.response.status) {
-      window.location.reload();
-    }
-
-    return Promise.reject(error);
-  }
-);
-*/
 export { api };

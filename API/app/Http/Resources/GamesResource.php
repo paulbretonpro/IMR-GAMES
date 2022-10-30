@@ -20,7 +20,8 @@ class GamesResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'rule' => $this->rule,
-            'roles' => RolesResource::collection($this->roles)
+            'roles' => RolesResource::collection($this->roles),
+            'code' => $this->code,
         ];
     }
 }
