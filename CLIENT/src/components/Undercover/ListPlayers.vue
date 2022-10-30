@@ -1,6 +1,6 @@
 <template>
   <div class="list-players">
-    <div class="player"  v-for="(member, index) in members" :key="member.name" :class="{ 'is-selected-to-start': indexWhoStart === index}" @dblclick="handleDbClick(member)">{{ member.name }}</div>
+    <div class="player"  v-for="(member, index) in members" :key="member.name" :class="{ 'is-selected-to-start': indexWhoStart === index, 'is-selected-to-delete': nbClick.index === index}" @touchend="handleDoubleTap(index, member)" @dblclick="handleDbClick(member)">{{ member.name }}</div>
   </div>
 </template>
 <script setup lang="ts">
@@ -8,7 +8,7 @@ import { LocalStorage } from 'quasar';
 import { GameENUM, UndercoverENUM } from 'src/LocalStorageEnum';
 import { Members } from 'src/models/undercover';
 import { useUndercoverStore } from 'src/stores/undercover';
-import { computed, watch } from 'vue'
+import { computed, watch, ref } from 'vue'
 import { useRouter } from 'vue-router';
 
 const router = useRouter()
@@ -16,9 +16,27 @@ const router = useRouter()
 const undercoverStore = useUndercoverStore()
 const members = computed(() => undercoverStore.undercover?.members)
 
+const isSelectedToDelete = ref(-1)
+const nbClick = ref({
+  index: -1,
+  click: 0
+})
+
 const handleDbClick = (member: Members) => {
   router.push({ name: 'reveal', params: { id: member.id }})
 }
+
+const handleDoubleTap = (index: number, member: Members) => {
+  if(nbClick.value.index === index) {
+    isSelectedToDelete.value = index
+    nbClick.value.index
+    router.push({ name: 'reveal', params: { id: member.id }})
+  } else {
+    nbClick.value.index = index
+  }
+}
+
+const handleClick = (index: number) => isSelectedToDelete.value = index 
 
 const indexMrWhite = LocalStorage.getItem(UndercoverENUM.MRWHITEID) as number
 
@@ -102,6 +120,10 @@ watch(
 
   .is-selected-to-start {
     background-color: red;
+  }
+
+  .is-selected-to-delete {
+    background-color: var(--background-secondary);
   }
 }
 </style>
