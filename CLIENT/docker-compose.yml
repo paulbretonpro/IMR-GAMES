@@ -8,4 +8,4 @@ services:
       - '8080:8080'
     volumes:
       - '.:/app'
-    command: /bin/sh -c "npm && quasar dev -m pwa"
+    command: /bin/sh -c "npm i && npm run dev"
